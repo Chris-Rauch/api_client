@@ -11,6 +11,7 @@ Dependencies:
 import requests
 
 class APIClient:
+    '''API Client'''
     def __init__(self, base_url: str, api_key: str):
         """
         Initializes the APIClient with the base URL and API key.

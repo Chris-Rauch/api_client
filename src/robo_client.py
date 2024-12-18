@@ -8,7 +8,7 @@ Requirements:
   - APIClient: The base class to handle HTTP requests
   - exceptions: Used for implementing custom exceptions
 '''
-from api_client import APIClient
+from src.api_client import APIClient
 import exceptions as re
 
 class RoboClient(APIClient):
@@ -62,14 +62,15 @@ class RoboClient(APIClient):
         config = None
         try:
             response = super().get(endpoint)
-            if response.status_code is 200 and "Callbalance" in response.json():
+            if response.status_code == 200 and "Callbalance" in response.json():
                 config = response.json()
-            raise re.DataFailedException(endpoint=endpoint)
+            else:
+                raise re.DataFailedException(endpoint=endpoint)
         except re.DataFailedException as e:
             print(e)
         return config
 
-    def multiJob(self, data):
+    def multi_job(self, data):
         """
         Schedules a job with the specified data.
 
@@ -94,7 +95,7 @@ class RoboClient(APIClient):
                 job_details = response.json()
             else:
                 raise re.DataFailedException(endpoint=endpoint)
-        except Exception as e:
+        except re.DataFailedException as e:
             print(e)
         return job_details
 
@@ -132,9 +133,10 @@ class RoboClient(APIClient):
         job_summary = None
         try:
             response = super().get(endpoint=endpoint, params=param)
-            if response.status_code is 200 and "call" in response.json():
+            if response.status_code == 200 and "call" in response.json():
                 job_summary = response.json()
-            raise re.DataFailedException
+            else:
+                raise re.DataFailedException
         except re.DataFailedException as e:
             print(e)
-        return job_summary 
+        return job_summary

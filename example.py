@@ -3,8 +3,8 @@ example.py
 '''
 #from src.api_client import APIClient
 from src.robo_client import RoboClient
-from config import auth
-
+#from config import auth
+auth = '123'
 
 
 client = RoboClient(auth)
