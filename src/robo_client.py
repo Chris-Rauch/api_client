@@ -12,11 +12,12 @@ from api_client import APIClient
 import exceptions as re
 
 class RoboClient(APIClient):
+    '''RoboClient'''
     # TODO implement basic auth verification
     def __init__(self, api_key, base_url = "https://robotalker.com/REST"):
         super().__init__(base_url, api_key)
         self.cookie = None
-        self.jobName = None
+        self.job_name = None
 
     def login(self):
         """
@@ -32,21 +33,16 @@ class RoboClient(APIClient):
         endpoint = "/api/Login"
         try:
             response = super().get(endpoint)
-            if response.status_code is 200 and "Set-Cookie" in response.headers:
+            if response.status_code == 200 and "Set-Cookie" in response.headers:
                 self.cookie = response.headers["Set-Cookie"].split(";")[0].strip()
-
-                # update header
                 self.headers["Cookie"] = self.cookie
                 self.headers.pop("Authorization")
                 return True
-            else:
-                raise re.LoginFailedException(response.status_code, response.json())
+            raise re.LoginFailedException(response.status_code, response.json())
         except re.LoginFailedException as e:
             print(e)
-        except Exception as e:
-            print(e)
         return False
-    
+
     def config(self):
         '''
         Retrieves account details including call and SMS balances.
@@ -68,11 +64,8 @@ class RoboClient(APIClient):
             response = super().get(endpoint)
             if response.status_code is 200 and "Callbalance" in response.json():
                 config = response.json()
-            else:
-                raise re.DataFailedException(endpoint=endpoint)
+            raise re.DataFailedException(endpoint=endpoint)
         except re.DataFailedException as e:
-            print(e)
-        except Exception as e:
             print(e)
         return config
 
@@ -104,8 +97,8 @@ class RoboClient(APIClient):
         except Exception as e:
             print(e)
         return job_details
-    
-    def jobSummary(self, jobname):
+
+    def job_summary(self, jobname):
         """
         Fetches the summary of a job by its name.
 
@@ -141,11 +134,7 @@ class RoboClient(APIClient):
             response = super().get(endpoint=endpoint, params=param)
             if response.status_code is 200 and "call" in response.json():
                 job_summary = response.json()
-            else:
-                raise re.DataFailedException
+            raise re.DataFailedException
         except re.DataFailedException as e:
-            print(e)
-        except Exception as e:
-            # return 204 if jobname isn't valid
             print(e)
         return job_summary 

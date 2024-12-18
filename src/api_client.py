@@ -21,7 +21,7 @@ class APIClient:
             "Authorization": f"Basic {self.api_key}",
             "Content-Type": "application/json",
         }
-    
+
     def _request(self, method: str, endpoint: str, data=None, params=None):
         """
         Sends an HTTP request to the API.
@@ -49,19 +49,19 @@ class APIClient:
         Sends a GET request.
         """
         return self._request("GET", endpoint, params=params)
-    
+
     def post(self, endpoint: str, data=None):
         """
         Sends a POST request.
         """
         return self._request("POST", endpoint, data=data)
-    
+
     def put(self, endpoint: str, data=None):
         """
         Sends a PUT request.
         """
         return self._request("PUT", endpoint, data=data)
-    
+
     def delete(self, endpoint: str):
         """
         Sends a DELETE request.

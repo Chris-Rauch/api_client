@@ -30,7 +30,8 @@ The RoboClient class customizes the APIClient to work specifically with the Robo
 
 ### Dependencies
 - Python 3.8 or higher
-- requests lib
+- requests
+- exceptions
 
 ### Installation
 1. Clone this repository and install dependencies:
