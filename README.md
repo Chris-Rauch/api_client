@@ -8,36 +8,37 @@ allows custom implementation for specific API's.
 ## System Design
 
 ### APIClient
-Defines generic HTTP requests such as:
+Provides the following generic HTTP request methods
   1. POST
   2. GET
   3. DELETE
   4. PUT
 
-All of these methods return a python request.Response() object
+All methods return a request.Response() object, making it easy to handle HTTP responses
 
 ### RoboClient
-Defines specific implemtation for robotalker.com such as:
-  1. Basic Auth verification
-  2. Automatically use and save cookie
-  3. Other pre-defined endpoints such as 
-    - /api/Config
-    - /api/MultiJob (post)
-    - /api/JobSummary
+The RoboClient class customizes the APIClient to work specifically with the RoboTalker API. Key features include:
+
+  1. Basic Authentication: Automatically verifies credentials.
+  2. Cookie Management: Saves and uses cookies for session management.
+  3. Predefined API Endpoints:
+    /api/Config: Retrieve account configuration.
+    /api/MultiJob (POST): Schedule a job.
+    /api/JobSummary: Get a summary of a scheduled job.
 
 ## Getting Started
 
 ### Dependencies
-- None
+- Python 3.8 or higher
+- requests lib
 
 ### Installation
-1. Clone this repository:
+1. Clone this repository and install dependencies:
    ```bash
    git clone https://github.com/Chris-Rauch/api_client.git
+   cd api_client
+   cd api_client
    ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
 
 ### Configuration (if any)
 None
