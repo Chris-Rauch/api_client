@@ -4,10 +4,10 @@ example.py
 #from src.api_client import APIClient
 from src.robo_client import RoboClient
 #from config import auth
-auth = '123'
+AUTH = '123'
 
 
-client = RoboClient(auth)
+client = RoboClient(AUTH)
 if client.login():
     print("logged in succesfully. Cookie is set")
 else:
@@ -36,4 +36,4 @@ data = {
     "rundatetime": "2024/12/18 12:30:00"
 }
 
-client.multiJob(data)
+client.multi_job(data)

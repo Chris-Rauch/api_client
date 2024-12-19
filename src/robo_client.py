@@ -9,7 +9,7 @@ Requirements:
   - exceptions: Used for implementing custom exceptions
 '''
 from src.api_client import APIClient
-import exceptions as re
+import src.exceptions as re
 
 class RoboClient(APIClient):
     '''RoboClient'''
