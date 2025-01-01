@@ -38,8 +38,9 @@ The RoboClient class customizes the APIClient to work specifically with the Robo
    ```bash
    git clone https://github.com/Chris-Rauch/api_client.git
    cd api_client
-   cd api_client
+   pip install -r requirements.txt
    ```
+
 
 ### Configuration (if any)
 None

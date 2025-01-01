@@ -38,12 +38,11 @@ class APIClient:
                 timeout=10,  # Set a timeout for requests
             )
             response.raise_for_status()  # Raise an error for HTTP codes 4xx/5xx
-            return response
         except requests.exceptions.HTTPError as http_err:
             print(f"HTTP error occurred: {http_err} - {response.text}")
         except requests.exceptions.RequestException as req_err:
             print(f"Request error occurred: {req_err}")
-        return None
+        return response
 
     def get(self, endpoint: str, params=None):
         """

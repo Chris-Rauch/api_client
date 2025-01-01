@@ -23,3 +23,9 @@ class DataFailedException(RoboClientException):
     '''Failed to Retrieve Data Exception'''
     def __init__(self, endpoint, msg="Having trouble interacting with endpoint."):
         super().__init__(f"{msg} Endpoint: {endpoint}")
+
+class InvalidScheduleTime(RoboClientException):
+    ''' Invalid Schedule Time Exception. Prevents the user from sending calls out 
+    outside business hours'''
+    def __init__(self, endpoint, msg="These calls are scheduled to send outside business hours"):
+        super().__init__(f"{msg} Endpoint: {endpoint}")
