@@ -11,6 +11,8 @@ Requirements:
 from api_client.src.api_client import APIClient
 import api_client.src.exceptions as re
 import requests
+from datetime import datetime
+import time
 
 class RoboClient(APIClient):
     '''RoboClient'''
@@ -95,6 +97,16 @@ class RoboClient(APIClient):
         for i in range(len(robo_contacts)):
             robo_contacts[i]['groupname'] = job_name
 
+        # add 3 hours to start and end time
+        # robotalker.com has our account set to timeTzOffset = 05:00:00
+        # actual offsest should be 8
+        start = datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S")
+        end = datetime.strptime(end_time, "%Y-%m-%dT%H:%M:%S")
+        start = start.replace(hour=start.hour + 3)
+        end = end.replace(hour=end.hour + 3)
+        start_time = start.isoformat()
+        end_time = end.isoformat()
+
         data = {
             "whattodo": "SendTtsMessage",
             "jobname": job_name,
@@ -125,9 +137,9 @@ class RoboClient(APIClient):
             print(e)
         return job_details
 
-    def multi_job_collection(self, job_name, contacts, start_time, end_time):
-        message_text = "Hello, this is General Agents Acceptance. This is the #var1# courtesy call to follow up on the remaining balance bill we sent you for contract number $var2 for the amount of $var3. For more information please give us a call at 949-470-9674. Thank you and have a great day!"
-        self.multi_job(job_name, message_text, contacts, start_time, end_time)
+    def multi_job_collections(self, job_name, contacts, start_time, end_time):
+        message_text = "Hello, this is General Agents Acceptance. This is the #var1# courtesy call to follow up on the remaining balance bill we sent you for contract number #var3# for the amount of $#var2#. For more information please give us a call at 949-470-9674. Thank you and have a great day!"
+        return self.multi_job(job_name, message_text, contacts, start_time, end_time)
     
     def job_summary(self, jobname):
 
@@ -223,7 +235,7 @@ class RoboClient(APIClient):
         start_time = time.time()
 
         while True:
-            job_details = get_job_details(job_id, user_id)
+            job_details = self.get_job_details(job_id, user_id)
             
             # return details if successful
             if job_details:
@@ -238,8 +250,4 @@ class RoboClient(APIClient):
             else: 
                 time.sleep(interval)
 
-    def _check_times(self, start_time, end_time):
-        ''' 
-        I don't want the user to be able to send calls out after business hours
-        '''
-        return False
+    
