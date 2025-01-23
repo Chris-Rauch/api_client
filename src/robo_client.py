@@ -17,12 +17,12 @@ import time
 class RoboClient(APIClient):
     '''RoboClient'''
     
-    def __init__(self, api_key, base_url = "https://robotalker.com"):
+    def __init__(self, api_key: str, base_url = "https://robotalker.com"):
         super().__init__(base_url, api_key)
         self.cookie = None
         self.job_name = None
 
-    def login(self):
+    def login(self) -> bool:
         """
         Logs into the RoboTalker API using Basic AUTH and stores the session cookie.
 
@@ -75,7 +75,8 @@ class RoboClient(APIClient):
             print(e)
         return config
 
-    def multi_job(self, job_name, message_text, robo_contacts, start_time, end_time = None):
+    def multi_job(self, job_name: str, message_text: str, \
+            robo_contacts: list[dict], start_time: str, end_time = None) -> list[dict]:
         """
         Schedules a job with the specified data.
 
@@ -137,11 +138,12 @@ class RoboClient(APIClient):
             print(e)
         return job_details
 
-    def multi_job_collections(self, job_name, contacts, start_time, end_time):
+    def multi_job_collections(self, job_name: str, contacts: list[dict], \
+            start_time: str, end_time: str) -> list[dict]:
         message_text = "Hello, this is General Agents Acceptance. This is the #var1# courtesy call to follow up on the remaining balance bill we sent you for contract number #var3# for the amount of $#var2#. For more information please give us a call at 949-470-9674. Thank you and have a great day!"
         return self.multi_job(job_name, message_text, contacts, start_time, end_time)
     
-    def job_summary(self, jobname):
+    def job_summary(self, jobname: str) -> dict:
 
         """
         Fetches the summary of a job by its name.
@@ -183,7 +185,8 @@ class RoboClient(APIClient):
             print(e)
         return job_summary
 
-    def get_job_details(self, job_id: str, user_id = '2402'):
+    def get_job_details(self, job_id: str, user_id = '2402') -> \
+            list[dict] | None:
         '''
         Fetches job details for a specified job. 
 
@@ -214,7 +217,8 @@ class RoboClient(APIClient):
             print(e)
         return job_details
 
-    def poll_job_details(self, interval: int, job_id: str, user_id = '2402'):
+    def poll_job_details(self, interval: int, job_id: str, user_id = '2402') \
+            -> list[dict] | None:
         '''
         Polls robotalker's GetJobDetail.ashx? endpoint by calling get_job_details
         at the specified interval. Will time out after 20min

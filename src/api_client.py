@@ -23,7 +23,8 @@ class APIClient:
             "Content-Type": "application/json",
         }
 
-    def _request(self, method: str, endpoint: str, data=None, params=None):
+    def _request(self, method: str, endpoint: str, data=None, params=None) -> \
+            requests.Response:
         """
         Sends an HTTP request to the API.
         """
@@ -44,25 +45,25 @@ class APIClient:
             print(f"Request error occurred: {req_err}")
         return response
 
-    def get(self, endpoint: str, params=None):
+    def get(self, endpoint: str, params=None) -> requests.Response:
         """
         Sends a GET request.
         """
         return self._request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data=None):
+    def post(self, endpoint: str, data=None) -> requests.Response:
         """
         Sends a POST request.
         """
         return self._request("POST", endpoint, data=data)
 
-    def put(self, endpoint: str, data=None):
+    def put(self, endpoint: str, data=None) -> requests.Response:
         """
         Sends a PUT request.
         """
         return self._request("PUT", endpoint, data=data)
 
-    def delete(self, endpoint: str):
+    def delete(self, endpoint: str) -> requests.Response:
         """
         Sends a DELETE request.
         """
