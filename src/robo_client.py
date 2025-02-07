@@ -10,8 +10,8 @@ Requirements:
 '''
 from api_client.src.api_client import APIClient
 import api_client.src.exceptions as re
-import requests
 from datetime import datetime
+import requests
 import time
 
 class RoboClient(APIClient):
@@ -45,7 +45,8 @@ class RoboClient(APIClient):
                 return True
             raise re.LoginFailedException(response.status_code, response.json())
         except re.LoginFailedException as e:
-            print(e)
+            sys.stderr.write(e)
+            sys.stderr.flush()
         return False
 
     def config(self):
@@ -123,9 +124,10 @@ class RoboClient(APIClient):
         }
 
         try:
-            if self._check_times(start_time, end_time):
+            '''
+            if self._check_times(start_time, end_time): # this is implemented in the Data class
                 raise InvalidScheduleTime(endpoint)
-
+            '''
             response = super().post(endpoint=endpoint, data=data)
             if response.status_code == 200 and "JobName" in response.json():
                 job_details = response.json()
