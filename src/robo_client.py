@@ -8,8 +8,8 @@ Requirements:
   - APIClient: The base class to handle HTTP requests
   - exceptions: Used for implementing custom exceptions
 '''
-from api_client.src.api_client import APIClient
-import api_client.src.exceptions as re
+from dep.api_client.src.api_client import APIClient
+import dep.api_client.src.exceptions as re
 from datetime import datetime
 import requests
 import time
